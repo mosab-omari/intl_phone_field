@@ -44,9 +44,11 @@ class CountryPickerDialog extends StatefulWidget {
   final String searchText;
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
+  final bool circulateFlags;
 
   CountryPickerDialog({
     Key? key,
+    this.circulateFlags = false,
     required this.searchText,
     required this.countryList,
     required this.onCountryChanged,
@@ -119,11 +121,20 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                 itemBuilder: (ctx, index) => Column(
                   children: <Widget>[
                     ListTile(
-                      leading: Image.asset(
-                        'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
-                        package: 'intl_phone_field',
-                        width: 32,
-                      ),
+                      leading: widget.circulateFlags
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(360),
+                              child: Image.asset(
+                                'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
+                                package: 'intl_phone_field',
+                                width: 32,
+                              ),
+                            )
+                          : Image.asset(
+                              'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
+                              package: 'intl_phone_field',
+                              width: 32,
+                            ),
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(
                         _filteredCountries[index].name,

@@ -1739,7 +1739,7 @@ const List<Country> countries = [
     flag: "🇸🇾",
     code: "SY",
     dialCode: "963",
-    minLength: 10,
+    minLength: 9,
     maxLength: 10,
   ),
   Country(

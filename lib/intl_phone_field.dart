@@ -231,9 +231,11 @@ class IntlPhoneField extends StatefulWidget {
   /// If unset, defaults to [EdgeInsets.zero].
   final EdgeInsets flagsButtonMargin;
   final bool dialogEnabled;
+  final bool circulateFlags;
 
   const IntlPhoneField({
     Key? key,
+    this.circulateFlags = false,
     this.initialCountryCode,
     this.dialogEnabled = true,
     this.obscureText = false,
@@ -260,7 +262,7 @@ class IntlPhoneField extends StatefulWidget {
     this.enabled = true,
     this.keyboardAppearance,
     @Deprecated('Use searchFieldInputDecoration of PickerDialogStyle instead')
-    this.searchText = 'Search country',
+        this.searchText = 'Search country',
     this.dropdownIconPosition = IconPosition.leading,
     this.dropdownIcon = const Icon(Icons.arrow_drop_down),
     this.autofocus = false,
@@ -297,20 +299,20 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
     _countryList = widget.countries == null
         ? countries
         : countries
-        .where((country) => widget.countries!.contains(country.code))
-        .toList();
+            .where((country) => widget.countries!.contains(country.code))
+            .toList();
     filteredCountries = _countryList;
     number = widget.initialValue ?? '';
     if (widget.initialCountryCode == null && number.startsWith('+')) {
       number = number.substring(1);
       // parse initial value
       _selectedCountry = countries.firstWhere(
-              (country) => number.startsWith(country.dialCode),
+          (country) => number.startsWith(country.dialCode),
           orElse: () => _countryList.first);
       number = number.substring(_selectedCountry.dialCode.length);
     } else {
       _selectedCountry = _countryList.firstWhere(
-              (item) => item.code == (widget.initialCountryCode ?? 'US'),
+          (item) => item.code == (widget.initialCountryCode ?? 'US'),
           orElse: () => _countryList.first);
     }
 
@@ -403,7 +405,7 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
       validator: (value) {
         if (!widget.disableLengthCheck && value != null) {
           return value.length >= _selectedCountry.minLength &&
-              value.length <= _selectedCountry.maxLength
+                  value.length <= _selectedCountry.maxLength
               ? null
               : widget.invalidNumberMessage;
         }
@@ -428,7 +430,11 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
         decoration: widget.dropdownDecoration,
         child: InkWell(
           borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
-          onTap: widget.enabled ? widget.dialogEnabled ? _changeCountry : null : null,
+          onTap: widget.enabled
+              ? widget.dialogEnabled
+                  ? _changeCountry
+                  : null
+              : null,
           child: Padding(
             padding: widget.flagsButtonPadding,
             child: Row(
@@ -442,11 +448,20 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
                   const SizedBox(width: 4),
                 ],
                 if (widget.showCountryFlag) ...[
-                  Image.asset(
-                    'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
-                    package: 'intl_phone_field',
-                    width: 32,
-                  ),
+                  widget.circulateFlags
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(360),
+                          child: Image.asset(
+                            'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
+                            package: 'intl_phone_field',
+                            width: 32,
+                          ),
+                        )
+                      : Image.asset(
+                          'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
+                          package: 'intl_phone_field',
+                          width: 32,
+                        ),
                   const SizedBox(width: 8),
                 ],
                 FittedBox(
