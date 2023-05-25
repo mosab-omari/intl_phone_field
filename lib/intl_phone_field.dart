@@ -342,6 +342,7 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
+          circulateFlags: widget.circulateFlags,
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
           searchText: widget.searchText,
@@ -454,7 +455,9 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
                           child: Image.asset(
                             'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
                             package: 'intl_phone_field',
-                            width: 32,
+                            width: 35,
+                            height: 35,
+                            fit: BoxFit.fill,
                           ),
                         )
                       : Image.asset(

@@ -127,7 +127,9 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                               child: Image.asset(
                                 'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
                                 package: 'intl_phone_field',
-                                width: 32,
+                                width: 35,
+                                height: 35,
+                                fit: BoxFit.fill,
                               ),
                             )
                           : Image.asset(
