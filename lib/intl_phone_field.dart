@@ -232,9 +232,11 @@ class IntlPhoneField extends StatefulWidget {
   final EdgeInsets flagsButtonMargin;
   final bool dialogEnabled;
   final bool circulateFlags;
+  final double flagSize;
 
   const IntlPhoneField({
     Key? key,
+    this.flagSize = 25,
     this.circulateFlags = false,
     this.initialCountryCode,
     this.dialogEnabled = true,
@@ -342,6 +344,7 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
       useRootNavigator: false,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
+          flagSize: widget.flagSize,
           circulateFlags: widget.circulateFlags,
           style: widget.pickerDialogStyle,
           filteredCountries: filteredCountries,
@@ -455,15 +458,16 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
                           child: Image.asset(
                             'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
                             package: 'intl_phone_field',
-                            width: 35,
-                            height: 35,
+                            width: widget.flagSize,
+                            height: widget.flagSize,
                             fit: BoxFit.fill,
                           ),
                         )
                       : Image.asset(
                           'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
                           package: 'intl_phone_field',
-                          width: 32,
+                          width: 13 + widget.flagSize,
+                          height: widget.flagSize,
                         ),
                   const SizedBox(width: 8),
                 ],
