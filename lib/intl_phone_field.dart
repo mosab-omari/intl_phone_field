@@ -432,8 +432,8 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
       margin: widget.flagsButtonMargin,
       child: DecoratedBox(
         decoration: widget.dropdownDecoration,
-        child: InkWell(
-          borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: widget.enabled
               ? widget.dialogEnabled
                   ? _changeCountry
