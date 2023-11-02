@@ -45,7 +45,9 @@ class CountryPickerDialog extends StatefulWidget {
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
   final bool circulateFlags;
+  final double? flagBorderRadius;
   final double flagSize;
+
   CountryPickerDialog({
     Key? key,
     required this.flagSize,
@@ -56,6 +58,7 @@ class CountryPickerDialog extends StatefulWidget {
     required this.selectedCountry,
     required this.filteredCountries,
     this.style,
+    this.flagBorderRadius,
   }) : super(key: key);
 
   @override
@@ -124,7 +127,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                     ListTile(
                       leading: widget.circulateFlags
                           ? ClipRRect(
-                              borderRadius: BorderRadius.circular(360),
+                              borderRadius: BorderRadius.circular(widget.flagBorderRadius ?? 360),
                               child: Image.asset(
                                 'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
                                 package: 'intl_phone_field',
@@ -137,7 +140,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                               'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
                               package: 'intl_phone_field',
                               width: 13 + widget.flagSize,
-                        height: widget.flagSize,
+                              height: widget.flagSize,
                             ),
                       contentPadding: widget.style?.listTilePadding,
                       title: Text(

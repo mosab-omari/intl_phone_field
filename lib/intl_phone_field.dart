@@ -232,6 +232,7 @@ class IntlPhoneField extends StatefulWidget {
   final EdgeInsets flagsButtonMargin;
   final bool dialogEnabled;
   final bool circulateFlags;
+  final double? flagBorderRadius;
   final double flagSize;
 
   const IntlPhoneField({
@@ -280,7 +281,7 @@ class IntlPhoneField extends StatefulWidget {
     this.cursorWidth = 2.0,
     this.showCursor = true,
     this.pickerDialogStyle,
-    this.flagsButtonMargin = EdgeInsets.zero,
+    this.flagsButtonMargin = EdgeInsets.zero, this.flagBorderRadius,
   }) : super(key: key);
 
   @override
@@ -454,7 +455,7 @@ class IntlPhoneFieldState extends State<IntlPhoneField> {
                 if (widget.showCountryFlag) ...[
                   widget.circulateFlags
                       ? ClipRRect(
-                          borderRadius: BorderRadius.circular(360),
+                          borderRadius: BorderRadius.circular(widget.flagBorderRadius ?? 360),
                           child: Image.asset(
                             'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
                             package: 'intl_phone_field',
